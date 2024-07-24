@@ -52,14 +52,15 @@ function playGame() {
             console.log("Computer wins")
  
         }            
-        console.log(`Human score : ${humanScore}`);
-        console.log(`Computer score : ${computerScore}`);
     }
     
     playRound(getHumanChoice(), getComputerChoice(3));
     playRound(getHumanChoice(), getComputerChoice(3));
     playRound(getHumanChoice(), getComputerChoice(3));
     playRound(getHumanChoice(), getComputerChoice(3));
+
+    console.log(`Human score : ${humanScore}`);
+    console.log(`Computer score : ${computerScore}`);
 }
 
 playGame()
