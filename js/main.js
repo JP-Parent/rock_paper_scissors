@@ -1,5 +1,5 @@
 function getComputerChoice(max) {
-    let choice = Math.floor(Math.random() * max)+1;
+    let choice = Math.floor(Math.random() * max) + 1;
 
     if (choice === 1) {
         return "rock"
@@ -10,57 +10,65 @@ function getComputerChoice(max) {
     else return "scissors"
 }
 
-function getHumanChoice() {
-    let choice = prompt("Rock, Paper, Scissors")
-    
-    if (choice === null || choice === "") {
-        return;
-    }
-
-    choice = choice.toLowerCase()
-    switch (choice) {
+function getHumanChoice(id) {
+    switch (id) {
 
         case "rock":
-            return choice
+            return id;
         case "paper":
-            return choice
+            return id;
         case "scissors":
-            return choice
-        default: window.alert("Please choose between the 3 options available : Rock, Paper, Scissors")
+            return id;
     }
 }
 
-function playGame() {
-    let humanScore = 0;
-    let computerScore = 0;
+function playRound(humanChoice, computerChoice) {
 
-    function playRound(humanChoice, computerChoice) {
-        if (humanChoice === computerChoice) {
-            console.log("It's a draw")
-        }
-
-        else if (humanChoice === "rock" && computerChoice === "scissors"
-            || humanChoice === "paper" && computerChoice === "rock"
-            ||humanChoice === "scissors" && computerChoice === "paper"
-        ) {
-            ++humanScore;
-            console.log("Human wins")
-        }
-
-        else {
-            ++computerScore;
-            console.log("Computer wins")
- 
-        }            
+    if (humanChoice === "rock" && computerChoice === "scissors"
+        || humanChoice === "paper" && computerChoice === "rock"
+        || humanChoice === "scissors" && computerChoice === "paper"
+    ) {
+        ++humanScore;
     }
-    
-    playRound(getHumanChoice(), getComputerChoice(3));
-    playRound(getHumanChoice(), getComputerChoice(3));
-    playRound(getHumanChoice(), getComputerChoice(3));
-    playRound(getHumanChoice(), getComputerChoice(3));
 
-    console.log(`Human score : ${humanScore}`);
-    console.log(`Computer score : ${computerScore}`);
+    else {
+        ++computerScore;
+    }
 }
 
-playGame()
+function winGame(humanScore) {
+    var winner = document.querySelector('#winner');
+
+    humanScore == 5 ? winner.textContent = "Human wins" :
+    winner.textContent = "Computer wins"
+}
+
+function reset(){
+    winner.textContent = "Game will reset in 3 seconds";
+    humanScore = 0;
+    computerScore = 0;
+    score.textContent = `Human score : ${humanScore} \nComputer score : ${computerScore}`;
+}
+
+
+var selection = document.querySelector('#selection');
+var score = document.querySelector('#score');
+var humanScore = 0;
+var computerScore = 0;
+
+selection.addEventListener("click", (event) => {
+    let target = event.target;
+
+    if(target.id == "reset") return reset();
+
+    var humanChoice = getHumanChoice(target.id);
+    var computerChoice = getComputerChoice(3);
+    playRound(humanChoice, computerChoice);
+    score.textContent = `Human score : ${humanScore} \nComputer score : ${computerScore}`;
+
+    if(humanScore >= 5 || computerScore >= 5){
+        winGame(humanScore)
+        setTimeout(3000);
+        reset();
+    }
+});
