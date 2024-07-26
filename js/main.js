@@ -41,17 +41,35 @@ function winGame(humanScore) {
 
     humanScore == 5 ? winner.textContent = "Human wins" :
     winner.textContent = "Computer wins"
+    disableButtons();
 }
 
 function reset(){
     winner.textContent = "Game will reset in 3 seconds";
+    setTimeout(enableButtons, 3000);
     humanScore = 0;
     computerScore = 0;
     score.textContent = `Human score : ${humanScore} \nComputer score : ${computerScore}`;
 }
 
+function disableButtons(){
+    for (const button of buttons){
+        if(button.id !== "reset"){
+            button.disabled = true;
+        }
+    }
+}
+
+function enableButtons(){
+    for (const button of buttons){
+        button.disabled = false;
+    }
+    winner.textContent = "";
+}
+
 
 var selection = document.querySelector('#selection');
+var buttons = document.querySelectorAll("button");
 var score = document.querySelector('#score');
 var humanScore = 0;
 var computerScore = 0;
@@ -68,7 +86,6 @@ selection.addEventListener("click", (event) => {
 
     if(humanScore >= 5 || computerScore >= 5){
         winGame(humanScore)
-        setTimeout(3000);
-        reset();
+        setTimeout(reset, 2000);
     }
 });
